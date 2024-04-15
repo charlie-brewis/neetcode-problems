@@ -12,7 +12,7 @@ Constraints:
 */
 
 bool containsDuplicate(List<int> nums) {
-  Set<int> seen = Set();
+  Set<int?> seen = Set();
   for (int i = 0; i < nums.length; i++) {
     int currNum = nums[i];
     if (seen.contains(currNum)) {
