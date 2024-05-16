@@ -27,10 +27,31 @@ Constraints:
     -100 <= nums[i] <= 100
     nums is sorted in non-decreasing order.
 */
+#include <stdio.h>
 
+
+//* This algorithm has a time complexity of O(n)
 
 int removeDuplicates(int* nums, int numsSize) {
-    for (int i = 0; i < numsSize; i++) {
-        
+    if (numsSize == 0) {return 0;}
+
+    // The first value will always be unique, therefore initialise to 1
+    int k = 1;
+    for (int i = 1; i < numsSize; i++) {
+        if (nums[i] != nums[k - 1]) {
+            // If we encounter a new unique value, override the value next to the previous unique value with said new value
+            nums[k] = nums[i];
+            k++;
+        }
     }
+    return k;
+}
+
+
+
+int main() {
+    int numsSize = 10;
+    int nums[10] = {0,0,1,1,1,2,2,3,3,4};
+    printf("%d", removeDuplicates(nums, numsSize));
+    return 0;
 }
