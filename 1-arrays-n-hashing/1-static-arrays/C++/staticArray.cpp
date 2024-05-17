@@ -56,6 +56,7 @@ class StaticArray {
             // Now insert since arr[i] is clear
             arr[i] = numToInsert;
             currentSize++;
+            return 0;
         }
 
 
@@ -63,7 +64,7 @@ class StaticArray {
         void display() const {
             std::cout << "\nStaticArray: [";
             for (int i = 0; i < currentSize; i++) {
-                std::cout << arr[i] << ', ';
+                std::cout << arr[i] << ", ";
             }
             std::cout << "] ; " << currentSize;
         }
@@ -84,3 +85,15 @@ int main() {
     myArray.display();
     return 0;
 }
+
+
+
+/*
+Conclusion - Static Arrays
+
+Operation |Big-O Time |Notes
+----------+-----------+-----
+Reading   |O(1)       |
+Insertion |O(n)       |O(1) at end - append
+Deletion  |O(n)       |O(1) at end - pop?
+*/
