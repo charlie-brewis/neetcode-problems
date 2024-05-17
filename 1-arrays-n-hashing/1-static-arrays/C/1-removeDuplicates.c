@@ -42,7 +42,7 @@ int removeDuplicates(int* nums, int numsSize) {
         if (nums[i] != nums[k - 1]) {
             // If we encounter a new unique value, override the value next to the previous unique value with said new value
             nums[k] = nums[i];
-            k++;
+            ++k;
         }
     }
     return k;

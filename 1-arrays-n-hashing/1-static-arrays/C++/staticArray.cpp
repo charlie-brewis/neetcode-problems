@@ -6,12 +6,8 @@ class StaticArray {
     public:
         // StaticArray datastructure holds the array of a defined size and it's current length (i.e., number of cells populated by non-null values)
         int arr[ARRAY_MAX_SIZE];
-        int currentLength;
-
-        StaticArray() {
-            // Initialise a static array by setting the length to 0 - i.e., empty
-            currentLength = 0;
-        }
+        // Initialise a static array by setting the length to 0 - i.e., empty
+        int currentLength = 0;
 
         // This operation is O(1)
         int removeLast() {
@@ -19,8 +15,7 @@ class StaticArray {
             if (currentLength == 0) {return -1;}
             // Overwrite the last element to some null-type value - the memory is still owned but it is considered empty
             // note this assumes -1 is an invalid value in the array
-            arr[currentLength - 1] = -1;
-            currentLength--;
+            arr[--currentLength] = -1;
             // Error code of 0 means no error was encountered
             return 0;
         }
@@ -33,7 +28,7 @@ class StaticArray {
                 arr[currentIndex - 1] = arr[currentIndex];
             }
             // No need to manually remove arr[i] as the shifting would've overridden it with arr[i + 1]
-            currentLength--;
+            --currentLength;
             return 0;
         }
 
@@ -41,8 +36,7 @@ class StaticArray {
         int append(int numToInsert) {
             // We can only append if the array isn't already full, since this is a static array
             if (currentLength == ARRAY_MAX_SIZE) {return -1;}
-            arr[currentLength] = numToInsert;
-            currentLength++;
+            arr[currentLength++] = numToInsert;
             return 0;
         }
 
@@ -55,7 +49,7 @@ class StaticArray {
             }
             // Now insert since arr[i] is clear
             arr[i] = numToInsert;
-            currentLength++;
+            ++currentLength;
             return 0;
         }
 

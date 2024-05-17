@@ -19,8 +19,7 @@ int removeLast(StaticArray* array) {
     if (array->currentLength > 0) {
         // Overwrite the last element to some null-type value - the memory is still owned but it is considered empty
         // note this assumes -1 is an invalid value in the array
-        array->arr[array->currentLength - 1] = -1;
-        array->currentLength--;
+        array->arr[--array->currentLength] = -1;
         // Error code of 0 means no error was encountered
         return 0;
     }
@@ -38,7 +37,7 @@ int removeAtIndex(StaticArray* array, int i) {
         arr[currentIndex - 1] = arr[currentIndex];
     }
     // No need to manually remove arr[i] as the shifting would've overridden it with arr[i + 1]
-    array->currentLength--;
+    --array->currentLength;
     return 0;
 }
 
@@ -46,8 +45,7 @@ int removeAtIndex(StaticArray* array, int i) {
 int append(StaticArray* array, int numToInsert) {
     // We can only append if the array isn't already full, since this is a static array
     if (array->currentLength < ARRAY_MAX_SIZE) {
-        array->arr[array->currentLength] = numToInsert;
-        array->currentLength++;
+        array->arr[array->currentLength++] = numToInsert;
         return 0;
     }
     return -1;

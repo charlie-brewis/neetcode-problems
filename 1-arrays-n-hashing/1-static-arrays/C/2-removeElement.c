@@ -36,7 +36,7 @@ int removeElement(int* nums, int numsSize, int val) {
         if (nums[i] != val) {
             // If the current number != val, move it to be next to the last current number that != val
             nums[k] = nums[i];
-            k++;
+            ++k;
         }
     }
     return k;
