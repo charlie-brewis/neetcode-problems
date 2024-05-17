@@ -30,7 +30,7 @@ int removeLast(StaticArray* array) {
 
 // In the worst case, n-1 shifts may be required, therefore this operation is O(n)
 int removeAtIndex(StaticArray* array, int i) {
-    if (i > array->currentSize || i < 0) {return -1;}
+    if (i >= array->currentSize || i < 0) {return -1;}
     // Assign a local pointer to make the code less verbose
     int* arr = array->arr;
     for (int currentIndex = i + 1; currentIndex < array->currentSize; currentIndex++) {
@@ -72,8 +72,8 @@ int insert(StaticArray* array, int i, int numToInsert) {
 }
 
 
-
-void displayArray(StaticArray* array) {
+// Const since this method does not modify the internal state of the array object
+void displayArray(const StaticArray* array) {
     printf("\nStaticArray: [");
     for (int i = 0; i < array->currentSize; i++) {
         printf("%d, ", array->arr[i]);
