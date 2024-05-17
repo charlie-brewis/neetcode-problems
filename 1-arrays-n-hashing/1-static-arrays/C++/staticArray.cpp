@@ -4,58 +4,58 @@
 
 class StaticArray {
     public:
-        // StaticArray datastructure holds the array and it's current size
+        // StaticArray datastructure holds the array of a defined size and it's current length (i.e., number of cells populated by non-null values)
         int arr[ARRAY_MAX_SIZE];
-        int currentSize;
+        int currentLength;
 
         StaticArray() {
-            // Initialise a static array by setting the size to 0 - i.e., empty
-            currentSize = 0;
+            // Initialise a static array by setting the length to 0 - i.e., empty
+            currentLength = 0;
         }
 
         // This operation is O(1)
         int removeLast() {
             // Error code of -1 means the array was already empty
-            if (currentSize == 0) {return -1;}
+            if (currentLength == 0) {return -1;}
             // Overwrite the last element to some null-type value - the memory is still owned but it is considered empty
             // note this assumes -1 is an invalid value in the array
-            arr[currentSize - 1] = -1;
-            currentSize--;
+            arr[currentLength - 1] = -1;
+            currentLength--;
             // Error code of 0 means no error was encountered
             return 0;
         }
 
         // In the worst case, n-1 shifts may be required, therefore this operation is O(n)
         int removeAtIndex(int i) {
-            if (i >= currentSize || i < 0) {return -1;}
-            for (int currentIndex = i + 1; currentIndex < currentSize; currentIndex++) {
+            if (i >= currentLength || i < 0) {return -1;}
+            for (int currentIndex = i + 1; currentIndex < currentLength; currentIndex++) {
                 // Shift every item from i + 1 down by one to ensure array is contiguous
                 arr[currentIndex - 1] = arr[currentIndex];
             }
             // No need to manually remove arr[i] as the shifting would've overridden it with arr[i + 1]
-            currentSize--;
+            currentLength--;
             return 0;
         }
 
         // Since this is always at the end, O(1)
         int append(int numToInsert) {
             // We can only append if the array isn't already full, since this is a static array
-            if (currentSize == ARRAY_MAX_SIZE) {return -1;}
-            arr[currentSize] = numToInsert;
-            currentSize++;
+            if (currentLength == ARRAY_MAX_SIZE) {return -1;}
+            arr[currentLength] = numToInsert;
+            currentLength++;
             return 0;
         }
 
         // In the worst case, n-1 shifts may be required, therefore this operation is O(n)
         int insert(int i, int numToInsert) {
-            if (currentSize == ARRAY_MAX_SIZE || i > currentSize || i < 0) {return -1;}
-            for (int currentIndex = currentSize - 1; currentIndex >= i; currentIndex--) {
+            if (currentLength == ARRAY_MAX_SIZE || i > currentLength || i < 0) {return -1;}
+            for (int currentIndex = currentLength - 1; currentIndex >= i; currentIndex--) {
                 // Shift every item from i up by one by iterating backwards until i
                 arr[currentIndex + 1] = arr[currentIndex];
             }
             // Now insert since arr[i] is clear
             arr[i] = numToInsert;
-            currentSize++;
+            currentLength++;
             return 0;
         }
 
@@ -63,10 +63,10 @@ class StaticArray {
         // Const since this method does not modify the internal state of the array
         void display() const {
             std::cout << "\nStaticArray: [";
-            for (int i = 0; i < currentSize; i++) {
+            for (int i = 0; i < currentLength; i++) {
                 std::cout << arr[i] << ", ";
             }
-            std::cout << "] ; " << currentSize;
+            std::cout << "] ; " << currentLength;
         }
 };
 
