@@ -69,6 +69,10 @@ int insert(StaticArray* array, int i, int numToInsert) {
     (*arrLength)++;
 }
 
+int getAt(StaticArray* array, int i) {
+    if (i > array->currentLength || i < 0) {return -1;}
+    return array->arr[i];
+}
 
 // Const since this method does not modify the internal state of the array object
 void displayArray(const StaticArray* array) {
