@@ -17,6 +17,11 @@ class DynamicArray {
             delete[] arr;
         }
 
+        int getAt(int i) {
+            if (i > length || i < 0) {return -1;}
+            return arr[i];
+        }
+
         // Note: this is considered O(1), even though it is sometimes O(n). I'm not exactly sure why but it's called "amortised complexity".
         void pushBack(int numToPush) {
             if (length == capacity) {
@@ -48,6 +53,23 @@ class DynamicArray {
             return 0;
         }
 
+        // O(n)
+        int removeAt(int i) {
+            if (i >= length || i < 0) {return -1;}
+            for (int currI = i + 1; currI < length; currI++) {
+                arr[currI - 1] = arr[currI];
+            }
+            --length;
+            return 0;
+        }
+
+        void display() {
+            std::cout << "StaticArray[";
+            for (int i = 0; i < length; i++) {
+                std::cout << arr[i] << ", ";
+            }
+            std::cout << "] : " << length << " : " << capacity << "\n";
+        }
 
     private:
         // Note this operation has an O(n) time complexity
@@ -64,3 +86,21 @@ class DynamicArray {
             arr = newArr;
         }
 };
+
+
+
+int main() {
+    // Note how dynamic array methods are the same as static arrays, with the added conditional resize
+    DynamicArray myDynamicArray = DynamicArray();
+    myDynamicArray.pushBack(1);
+    myDynamicArray.pushBack(2);
+    myDynamicArray.pushBack(3);
+    myDynamicArray.display();
+    myDynamicArray.pushBack(4);
+    myDynamicArray.display();
+    myDynamicArray.insert(2, 5);
+    myDynamicArray.display();
+    myDynamicArray.removeAt(3);
+    myDynamicArray.display();
+    return 0;
+}
