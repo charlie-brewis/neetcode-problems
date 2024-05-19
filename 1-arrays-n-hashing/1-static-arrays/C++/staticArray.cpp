@@ -3,12 +3,13 @@
 #define ARRAY_MAX_SIZE 10
 
 class StaticArray {
-    public:
+    private:
         // StaticArray datastructure holds the array of a defined size and it's current length (i.e., number of cells populated by non-null values)
         int arr[ARRAY_MAX_SIZE];
         // Initialise a static array by setting the length to 0 - i.e., empty
         int currentLength = 0;
 
+    public:
         // This operation is O(1)
         int removeLast() {
             // Error code of -1 means the array was already empty
@@ -51,6 +52,12 @@ class StaticArray {
             arr[i] = numToInsert;
             ++currentLength;
             return 0;
+        }
+
+        // Finding an item in an array is always O(1) because arrays use indexing
+        int getAt(int i) {
+            if (i > currentLength || i < 0) {return -1;}
+            return arr[i];
         }
 
 
