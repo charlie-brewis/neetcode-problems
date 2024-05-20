@@ -118,3 +118,8 @@ Reading   |O(1)       |
 Insertion |O(n)       |O(1) at end - append
 Deletion  |O(n)       |O(1) at end - pop?
 */
+
+
+//* Note: 
+//*     C++ has an inbuilt dynamic array type (vector) which we can use in the future when working with dynamic arrays.
+//*     We only implemented it here to understand how it works.
