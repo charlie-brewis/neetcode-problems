@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define DEFAULT_CAPACITY 3
+#define DEFAULT_CAPACITY 1
 
 
 typedef struct {
@@ -10,18 +10,20 @@ typedef struct {
     int* arr;
 } DynamicArray;
 
+static void resize(DynamicArray* array) {
+    array->capcaity *= 2;
+    array->arr = (int*)realloc(array->arr, array->capcaity * sizeof(int)); 
+}
+
 DynamicArray* intialiseDynamicArray() {
     DynamicArray* array = (DynamicArray*)malloc(sizeof(DynamicArray)); 
     array->arr = NULL;
     array->length = 0;
     array->capcaity = DEFAULT_CAPACITY;
+    resize(array); // allocate memory for the array
     return array;
 }
 
-static void resize(DynamicArray* array) {
-    array->capcaity *= 2;
-    array->arr = (int*)realloc(array->arr, array->capcaity * sizeof(int)); 
-}
 
 int getAt(DynamicArray* array, int i) {
     if (i > array->length || i < 0) {return -1;}
@@ -34,12 +36,10 @@ int popBack(DynamicArray* array) {
 } 
 
 int pushBack(DynamicArray* array, int value) {
-    //! Segfault in here
     if (array->length == array->capcaity) {
         resize(array);
     }
     array->arr[array->length++] = value;
-    ++array->length;
     return 0;
 }
 
@@ -48,7 +48,7 @@ int insertAt(DynamicArray* array, int i, int value) {
     if (array->length == array->capcaity) {
         resize(array);
     }
-    for (int curI = array->length - 1; curI >= i; i--) {
+    for (int curI = array->length - 1; curI >= i; curI--) {
         array->arr[curI + 1] = array->arr[curI];
     }
     array->arr[i] = value;
@@ -81,18 +81,16 @@ void displayDynamicArray(DynamicArray* array) {
 
 
 int main() {
-    printf("Main running");
     DynamicArray* myDynamicArray = intialiseDynamicArray();
     pushBack(myDynamicArray, 1);
+    displayDynamicArray(myDynamicArray);
     pushBack(myDynamicArray, 2);
+    displayDynamicArray(myDynamicArray);
     pushBack(myDynamicArray, 3);
     displayDynamicArray(myDynamicArray);
-    pushBack(myDynamicArray, 4);
-    displayDynamicArray(myDynamicArray);
-    insertAt(myDynamicArray, 2, 5);
+    insertAt(myDynamicArray, 2, 4);
     displayDynamicArray(myDynamicArray);
     removeAt(myDynamicArray, 3);
     displayDynamicArray(myDynamicArray);
-    printf("Main ran successfully");
     return 0;
 }
