@@ -28,6 +28,23 @@ Constraints:
 */
 #include <vector>
 
+// Intuitive solution iterates and pushes twice -> O(2n) = O(n)
 std::vector<int> getConcatenation(std::vector<int>& nums) {
-        
+    std::vector<int> ans;
+    for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < nums.size(); i++) {
+            ans.push_back(nums[i]);
+        }
+    }
+    return ans;
+}
+
+// Best approach instatiates ans with a size of 2n and uses indexing to override the null values -> O(n)
+std::vector<int> getConcatenation2(std::vector<int>& nums) {
+    int n = nums.size();
+    std::vector<int> ans(2 * n);
+    for (int i = 0; i < n; i++) {
+        ans[i] = nums[i];
+        ans[i + n] = nums[i];
+    }
 }
