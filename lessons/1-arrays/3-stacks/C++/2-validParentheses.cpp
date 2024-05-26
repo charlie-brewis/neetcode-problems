@@ -42,11 +42,10 @@ bool isValid(std::string s) {
             stack.push(c);
         } else {
             // If the top of the stack is not the corresponding opening bracket, the order is wrong, so invalid
-            if (
+            if (stack.empty() ||
                 c == ')' && stack.top() != '(' ||
                 c == ']' && stack.top() != '[' ||
-                c == '}' && stack.top() != '{'
-            ) {
+                c == '}' && stack.top() != '{' ){
                 return false;
             }
             stack.pop();
@@ -58,8 +57,6 @@ bool isValid(std::string s) {
 
 
 int main() {
-    std::cout << "hello World!";
-    //! Error - i think segfault in this testcase
     std::cout << isValid("]"); 
     return 0;
 }
