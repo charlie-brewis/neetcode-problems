@@ -1,4 +1,4 @@
-/*
+/*"(", "[", "{"
 https://leetcode.com/problems/valid-parentheses/description/
 
 
@@ -27,10 +27,39 @@ Constraints:
     1 <= s.length <= 104
     s consists of parentheses only '()[]{}'.
 */
+#include <iostream>
 
 #include <string>
+#include <stack>
 
 
 bool isValid(std::string s) {
-        
+    std::stack<char> stack;
+    
+    for (char c : s) {
+        // Push opening brackets
+        if (c == '(' || c == '[' || c == '{') {
+            stack.push(c);
+        } else {
+            // If the top of the stack is not the corresponding opening bracket, the order is wrong, so invalid
+            if (
+                c == ')' && stack.top() != '(' ||
+                c == ']' && stack.top() != '[' ||
+                c == '}' && stack.top() != '{'
+            ) {
+                return false;
+            }
+            stack.pop();
+        }
+    }
+    // If the stack is empty, all opening brackets have been paired, else there are unpaired opening brackets left
+    return stack.empty();
+}
+
+
+int main() {
+    std::cout << "hello World!";
+    //! Error - i think segfault in this testcase
+    std::cout << isValid("]"); 
+    return 0;
 }
