@@ -56,7 +56,7 @@ bool isValid(char* s) {
         }
 
         // If the top of the stack is not the corresponding opening bracket, the order is wrong, so invalid
-        char top = stack[stackTopIndex];
+        char top = stack[stackTopIndex--];
         if (
             c == ')' && top != '(' ||
             c == ']' && top != '[' ||
@@ -65,7 +65,6 @@ bool isValid(char* s) {
                 free(stack);
                 return false;
         }
-        --stackTopIndex;
     }
     // If the stack is empty, all opening brackets have been paired, else there are unpaired opening brackets left
     free(stack);
