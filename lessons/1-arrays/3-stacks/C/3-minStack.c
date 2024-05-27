@@ -34,38 +34,57 @@ Example 1:
 Constraints:
     - -231 <= val <= 231 - 1
     - Methods pop, top and getMin operations will always be called on non-empty stacks.
-    - At most 3 * 104 calls will be made to push, pop, top, and getMin.
+    - At most 3 * 10^4 calls will be made to push, pop, top, and getMin.
 */
+#include <stdlib.h>
+#include <stdio.h>
+
+// Taken from constraints
+#define MAX_STACK_SIZE 30000
 
 
 typedef struct {
-    
+    // Stack stores the stack of values, minIndicies stores the indicies of the minimum values in 
+    // the smallest value index is at the back, the second smallest at the second back, and so on
+    int* stack;
+    int* minIndicies;
+    int stackLength;
+    int minIndiciesLength;
 } MinStack;
 
 
 MinStack* minStackCreate() {
-    
+    MinStack* minStack = (MinStack*) malloc(sizeof(MinStack));
+    minStack->stack = (int*) malloc(MAX_STACK_SIZE * sizeof(int));
+    minStack->minIndicies = (int*) malloc(MAX_STACK_SIZE * sizeof(int));
+    minStack->stackLength = 0;
+    minStack->minIndiciesLength = 0;
+    return minStack;
 }
 
 void minStackPush(MinStack* obj, int val) {
-    
+    int minIndiciesBack = obj->minIndicies[obj->minIndiciesLength - 1];
+    // If minIndicies is empty OR the val is less than the minimum value, push the current size of stack to the back of minIndicies
+    if (
+        obj->minIndiciesLength == 0 || 
+        val < obj->stack[minIndiciesBack])
+    {
+        obj->minIndicies[obj->minIndiciesLength++] = obj->stackLength;
+    }
+    obj->stack[obj->stackLength++] = val;
 }
 
 void minStackPop(MinStack* obj) {
-    
+    --obj->stackLength;
+    // If the value just popped was the smallest value (back of minIndicies), then pop minIndicies too
+    if (obj->minIndicies[obj->minIndiciesLength - 1] == obj->stackLength) --obj->minIndiciesLength;
 }
 
-int minStackTop(MinStack* obj) {
-    
-}
+int minStackTop(MinStack* obj) { return obj->stack[obj->stackLength - 1]; }
 
-int minStackGetMin(MinStack* obj) {
-    
-}
+int minStackGetMin(MinStack* obj) { return obj->stack[obj->minIndicies[obj->minIndiciesLength - 1]]; }
 
-void minStackFree(MinStack* obj) {
-    
-}
+void minStackFree(MinStack* obj) { free(obj); }
 
 /**
  * Your MinStack struct will be instantiated and called as such:
@@ -80,3 +99,17 @@ void minStackFree(MinStack* obj) {
  
  * minStackFree(obj);
 */
+
+
+int main() {
+    MinStack* obj = minStackCreate();
+    minStackPush(obj, -2);
+    minStackPush(obj, 0);
+    minStackPush(obj, -3);
+    printf("%d\n", minStackGetMin(obj));
+    minStackPop(obj);
+    printf("%d\n", minStackTop(obj));
+    printf("%d\n", minStackGetMin(obj));
+    return 0;
+}
+
