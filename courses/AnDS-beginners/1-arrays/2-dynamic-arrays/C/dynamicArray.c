@@ -1,3 +1,17 @@
+/*
+A dynamic array is a datastructure that contains a dynamic number of cells located contiguously in memory.
+Each cell has a corresponding index number - the number of steps it is from the first cell.
+Unlike a static array, it can dynamically increase it's capacity.
+
+Operations:
+    -> accessLast - O(1)
+    -> accessAt   - O(1)
+    -> removeLast - O(1)
+    -> removeAt   - O(n)
+    -> insertLast - O(1)
+    -> insertAt   - O(n)
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #define DEFAULT_CAPACITY 1
@@ -10,7 +24,7 @@ typedef struct {
     int* arr;
 } DynamicArray;
 
-// When we resize a dynamic array, we actually double it's size - keeping the average time complexity to O(n)
+// When we resize a dynamic array, we actually double it's size - keeping the average time complexity of an insert or removal to O(n)
 // Note: the reason this works is quite maths-y so i won't explain it here
 static void resize(DynamicArray* array) {
     array->capcaity *= 2;
@@ -27,21 +41,36 @@ DynamicArray* intialiseDynamicArray() {
     return array;
 }
 
+int accessLast(DynamicArray* array) {
+    if (array->length == 0) {return -1;}
+    return array->arr[array->length - 1];
+}
+
 // Just like a static array, we can make use of indexes to get any item at a defined index in O(1) time
-int getAt(DynamicArray* array, int i) {
-    if (i > array->length || i < 0) {return -1;}
+int accessAt(DynamicArray* array, int i) {
+    if (i > array->length || i < 0 || array->length == 0) {return -1;}
     return array->arr[i];
 }
 
 // Since pop always targets the last item in the array, it is O(1)
-int popBack(DynamicArray* array) {
+int removeLast(DynamicArray* array) {
     if (array->length == 0) {return -1;}
     // By decrementing our length, we are now essentially disregaurding the old last value - we never consider a value past our length as non-null
     return array->arr[array->length--];
 } 
 
+// O(n) - same as static array
+int removeAt(DynamicArray* array, int i) {
+    if (i > array->length || i < 0) {return -1;}
+    for (int curI = i + 1; curI < array->length; curI++) {
+        array->arr[curI - 1] = array->arr[curI];
+    }
+    --array->length;
+    return 0;
+}
+
 // Again for push, O(1); however, the possiblilty of resizing [O(n)] is the case we still define this as O(1) - "amortised complexity"
-int pushBack(DynamicArray* array, int value) {
+int append(DynamicArray* array, int value) {
     if (array->length == array->capcaity) {
         resize(array);
     }
@@ -60,16 +89,6 @@ int insertAt(DynamicArray* array, int i, int value) {
     }
     array->arr[i] = value;
     ++array->length;
-    return 0;
-}
-
-// O(n) - same as static array
-int removeAt(DynamicArray* array, int i) {
-    if (i > array->length || i < 0) {return -1;}
-    for (int curI = i + 1; curI < array->length; curI++) {
-        array->arr[curI - 1] = array->arr[curI];
-    }
-    --array->length;
     return 0;
 }
 
@@ -93,11 +112,11 @@ void displayDynamicArray(DynamicArray* array) {
 int main() {
     // Note how dynamic array methods are the same as static arrays, with the added conditional resize
     DynamicArray* myDynamicArray = intialiseDynamicArray();
-    pushBack(myDynamicArray, 1);
+    append(myDynamicArray, 1);
     displayDynamicArray(myDynamicArray);
-    pushBack(myDynamicArray, 2);
+    append(myDynamicArray, 2);
     displayDynamicArray(myDynamicArray);
-    pushBack(myDynamicArray, 3);
+    append(myDynamicArray, 3);
     displayDynamicArray(myDynamicArray);
     insertAt(myDynamicArray, 2, 4);
     displayDynamicArray(myDynamicArray);
