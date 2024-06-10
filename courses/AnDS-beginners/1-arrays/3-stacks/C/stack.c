@@ -52,12 +52,17 @@ int push(Stack* stack, int value) {
     return 0;
 }
 
+void freeMemory(Stack* stack) {
+    free(stack->data);
+    free(stack);
+}
+
 /*
 Conclusion - Stacks
 
 Operation |Big-O Time |Notes
 ----------+-----------+-----
 Reading   |O(1)       |Only possible on last item
-Insertion |O(1)       |Only possible on last item
+Insertion |O(1)       |Only possible on last item, amortised
 Deletion  |O(1)       |Only possible on last item
 */
