@@ -1,4 +1,3 @@
-
 /*
 A static array is a datastructure that contains a set number of cells located contiguously in memory.
 It cannot grow or shrink, and each cell has a corresponding index number - the number of steps it is from the first cell.
@@ -32,6 +31,7 @@ int accessLast(StaticArray* array) {
     return array->arr[array->currentLength - 1];
 }
 
+// Finding an item in an array is always O(1) because arrays use indexing
 int accessAt(StaticArray* array, int i) {
     if (i > array->currentLength || i < 0 || array->currentLength == 0) {return -1;}
     return array->arr[i];

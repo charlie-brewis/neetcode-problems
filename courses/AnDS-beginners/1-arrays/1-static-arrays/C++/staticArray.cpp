@@ -1,3 +1,16 @@
+/*
+A static array is a datastructure that contains a set number of cells located contiguously in memory.
+It cannot grow or shrink, and each cell has a corresponding index number - the number of steps it is from the first cell.
+
+Operations:
+    -> accessLast - O(1)
+    -> accessAt   - O(1)
+    -> removeLast - O(1)
+    -> removeAt   - O(n)
+    -> insertLast - O(1)
+    -> insertAt   - O(n)
+*/
+
 #include <iostream>
 
 #define ARRAY_MAX_SIZE 10
@@ -10,6 +23,17 @@ class StaticArray {
         int currentLength = 0;
 
     public:
+        int accessLast() {
+            if (currentLength == 0) {return -1;}
+            return arr[currentLength - 1];
+        }
+        
+        // Finding an item in an array is always O(1) because arrays use indexing
+        int accessAt(int i) {
+            if (i > currentLength || i < 0 || currentLength == 0) {return -1;}
+            return arr[i];
+        }
+
         // This operation is O(1)
         int removeLast() {
             // Error code of -1 means the array was already empty
@@ -54,11 +78,6 @@ class StaticArray {
             return 0;
         }
 
-        // Finding an item in an array is always O(1) because arrays use indexing
-        int getAt(int i) {
-            if (i > currentLength || i < 0) {return -1;}
-            return arr[i];
-        }
 
 
         // Const since this method does not modify the internal state of the array
