@@ -1,4 +1,17 @@
 
+/*
+A static array is a datastructure that contains a set number of cells located contiguously in memory.
+It cannot grow or shrink, and each cell has a corresponding index number - the number of steps it is from the first cell.
+
+Operations:
+    -> accessLast - O(1)
+    -> accessAt   - O(1)
+    -> removeLast - O(1)
+    -> removeAt   - O(n)
+    -> insertLast - O(1)
+    -> insertAt   - O(n)
+*/
+
 #include <stdio.h>
 
 #define ARRAY_MAX_SIZE 10
@@ -12,6 +25,16 @@ typedef struct {
 void initialise(StaticArray* array) {
     // Initialise a static array by setting the length to 0 - i.e., empty
     array->currentLength = 0;
+}
+
+int accessLast(StaticArray* array) {
+    if (array->currentLength == 0) {return -1;}
+    return array->arr[array->currentLength - 1];
+}
+
+int accessAt(StaticArray* array, int i) {
+    if (i > array->currentLength || i < 0 || array->currentLength == 0) {return -1;}
+    return array->arr[i];
 }
 
 // This operation is O(1)
@@ -69,10 +92,6 @@ int insert(StaticArray* array, int i, int numToInsert) {
     (*arrLength)++;
 }
 
-int getAt(StaticArray* array, int i) {
-    if (i > array->currentLength || i < 0) {return -1;}
-    return array->arr[i];
-}
 
 // Const since this method does not modify the internal state of the array object
 void displayArray(const StaticArray* array) {
