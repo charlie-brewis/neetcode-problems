@@ -34,10 +34,9 @@ static void resize(DynamicArray* array) {
 DynamicArray* intialiseDynamicArray() {
     // Define a pointer to allocated memory for the DynamicArray datastructure
     DynamicArray* array = (DynamicArray*)malloc(sizeof(DynamicArray)); 
-    // Define a pointer to allocated memory for the array of the DynamicArray datastructure
-    array->arr = (int*)realloc(array->arr, array->capcaity * sizeof(int)); 
     array->length = 0;
     array->capcaity = DEFAULT_CAPACITY;
+    resize(array);
     return array;
 }
 
