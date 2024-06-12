@@ -58,6 +58,7 @@ class SinglyLinkedList {
             tail = head;
         }
 
+
         // O(1) since we have the tail pointer
         int accessLast() const { 
             // If the list is empty, return error code
@@ -67,6 +68,7 @@ class SinglyLinkedList {
 
         // O(n) since we don't have indexing
         int accessAt(const int index) const { return accessNodeAt(index)->val; }
+
 
         // Always O(n) because we have to traverse to the end of the list
         void removeLast() {
@@ -87,7 +89,6 @@ class SinglyLinkedList {
 
         // O(n) because we have to access at a specified index
         void removeAt(const int index) {
-            // If the list is empty, do nothing
             if (head == tail) { return; }
 
             // Get node before the specified index
@@ -106,6 +107,7 @@ class SinglyLinkedList {
                 curr->next = newNext;
             }
         }
+
 
         // O(1) since we have the tail pointer
         void insertEnd(const int newVal) {
