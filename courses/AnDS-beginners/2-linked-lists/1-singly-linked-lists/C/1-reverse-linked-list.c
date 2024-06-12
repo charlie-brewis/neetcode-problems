@@ -15,3 +15,13 @@ Constraints:
     0 <= The length of the list <= 1000.
     -1000 <= Node.val <= 1000
 */
+
+
+typedef struct ListNode {
+    int val;
+    ListNode *next;
+} ListNode;
+
+ListNode* reverseList(ListNode* head) {
+    
+}
