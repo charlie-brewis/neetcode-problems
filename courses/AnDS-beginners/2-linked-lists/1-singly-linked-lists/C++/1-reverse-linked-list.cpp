@@ -16,16 +16,12 @@ Constraints:
     -1000 <= Node.val <= 1000
 */
 
-class ListNode {
-    public:
-        int val;
-        // Pointer to the next ListNode in the linked list
-        ListNode* next;
-
-        ListNode(int initialVal = 0, ListNode* nextNode = nullptr) {
-            val = initialVal;
-            next = nextNode;
-        }
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 class Solution {
