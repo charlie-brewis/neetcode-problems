@@ -26,6 +26,7 @@ struct ListNode {
 
 class Solution {
     public:
+    // O(n)
         ListNode* reverseList(ListNode* head) {
             if (!head || !head->next) { return head; }
             ListNode* nextNode;
