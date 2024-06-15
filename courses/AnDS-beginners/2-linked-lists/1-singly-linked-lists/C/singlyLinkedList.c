@@ -61,7 +61,6 @@ SinglyLinkedList* instantiateSinglyLinkedList() {
 
 // Frees memory of linked list and all remaining nodes
 void freeSinglyLinkedList(SinglyLinkedList* linkedList) {
-    int i = 0;
     ListNode* currentNode = linkedList->head;
     while (currentNode) { 
         ListNode* nextNode = currentNode->next;
@@ -74,7 +73,8 @@ void freeSinglyLinkedList(SinglyLinkedList* linkedList) {
 static ListNode* accessNodeAt(const SinglyLinkedList* linkedList, const int index) {
     int i = 0;
     ListNode* currentNode = linkedList->head;
-    while (i++ <= index && currentNode) { currentNode = currentNode->next; }
+    // index + 1 because of dummy first node
+    while (i++ != index + 1 && currentNode) { currentNode = currentNode->next; }
     return currentNode;
 }
 
@@ -137,7 +137,7 @@ void insertEnd(SinglyLinkedList* linkedList, const int newVal) {
 // O(n) since we have to access at an index
 void insertAt(SinglyLinkedList* linkedList, const int index, const int newVal) {
     ListNode* prevNode = accessNodeAt(linkedList, index - 1);
-    // Return if the previous node doesn't exist - i.e., the index was out of bounds
+    // Return if the previous node doesn't exist - i.e., the index was out of bounds due to dummy
     if (!prevNode) { return; }
 
     ListNode* oldPrevNodeNext = prevNode->next;
