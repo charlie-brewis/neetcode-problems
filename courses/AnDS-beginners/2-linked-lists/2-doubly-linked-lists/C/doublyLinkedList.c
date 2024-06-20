@@ -10,7 +10,7 @@ should consider how our linked list will be applied in our program.
 Operations:
     -> accessLast - O(1)
     -> accessAt   - O(n)
-    -> removeLast - O(n)
+    -> removeLast - O(1)
     -> removeAt   - O(n)
     -> insertLast - O(1)
     -> insertAt   - O(n)
@@ -144,3 +144,16 @@ int main() {
     insertAt(myLinkedList, 2, 3);
     display(myLinkedList);
 }
+
+
+/*
+Conclusion - Doubly Linked Lists
+
+Operation |Big-O Time |Notes
+----------+-----------+-----
+Reading   |O(n)       |O(1) at end
+Insertion |O(n)       |O(1) at end
+Deletion  |O(n)       |O(1) at end
+
+Generally, doubly linked lists are used over singly linked lists for their bidirectional traversal in specific usecases
+*/

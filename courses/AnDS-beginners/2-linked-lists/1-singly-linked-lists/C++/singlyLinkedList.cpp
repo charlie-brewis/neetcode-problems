@@ -58,6 +58,15 @@ class SinglyLinkedList {
             tail = head;
         }
 
+        ~SinglyLinkedList() {
+            ListNode* currentNode = head;
+            ListNode* nextNode;
+            while (currentNode) {
+                nextNode = currentNode->next;
+                delete currentNode;
+                currentNode = nextNode;
+            }
+        }
 
         // O(1) since we have the tail pointer
         int accessLast() const { 
