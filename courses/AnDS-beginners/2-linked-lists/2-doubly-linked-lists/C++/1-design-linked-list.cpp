@@ -56,9 +56,10 @@ class MyLinkedList {
 private:
     MyLinkedListNode* head;
     MyLinkedListNode* tail;
+    int size;
 
-    MyLinkedListNode* getNodeAtIndex(int index) {
-        if (index < 0 || head == tail) return nullptr;
+    MyLinkedListNode* getNodeAtIndex(const int index) const {
+        if (index < 0 || !size ) return nullptr;
 
         int i = 0;
         MyLinkedListNode* currentNode = head;
@@ -69,16 +70,16 @@ private:
     }
 
 public:
-    MyLinkedList() : head(nullptr), tail(nullptr) {}
+    MyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
     
-    int get(int index) {
+    int get(const int index) const {
         MyLinkedListNode* nodeAtIndex = getNodeAtIndex(index);
         return nodeAtIndex ? nodeAtIndex->val : -1;
     }
     
-    void addAtHead(int val) {
+    void addAtHead(const int val) {
         MyLinkedListNode* newNode = new MyLinkedListNode(val);
-        if (!head) {
+        if (!size++) {
             head = newNode;
             tail = head;
             return;
@@ -88,9 +89,9 @@ public:
         head = newNode;
     }
     
-    void addAtTail(int val) {
+    void addAtTail(const int val) {
         MyLinkedListNode* newNode = new MyLinkedListNode(val);
-        if (!head) {
+        if (!size++) {
             head = newNode;
             tail = head;
             return;
@@ -100,17 +101,23 @@ public:
         tail = newNode;
     }
 
-    void addAtIndex(int index, int val) {
-        MyLinkedListNode* prevNode = getNodeAtIndex(index - 1);
-        if (!prevNode) return;
-
-        prevNode->next = new MyLinkedListNode(val, prevNode->next, prevNode);
-        // If we inserted at the end, update the tail, else update the prev pointer of the next node
-        if (!prevNode->next->next) tail = prevNode->next;
-        else prevNode->next->next->prev = prevNode->next;
+    void addAtIndex(const int index, const int val) {
+        if (index < 0 || index > size) return;
+        if (index == 0) {
+            addAtHead(val);
+            return;
+        }
+        if (index == size) {
+            addAtTail(val);
+            return;
+        }
+        ++size;
+        MyLinkedListNode* nodeAtIndex = getNodeAtIndex(index);
+        nodeAtIndex->prev = new MyLinkedListNode(val, nodeAtIndex, nodeAtIndex->prev);
+        nodeAtIndex->prev->prev->next = nodeAtIndex->prev;
     }
     
-    void deleteAtIndex(int index) {
+    void deleteAtIndex(const int index) {
         MyLinkedListNode* nodeAtIndex = getNodeAtIndex(index);
         if (!nodeAtIndex) return;
 
@@ -123,10 +130,11 @@ public:
         else tail = nodeAtIndex->prev;
 
         delete nodeAtIndex;
+        --size;
     }
 
 
-    void display() {
+    void display() const {
         if (!head) std::cout << "null";
         MyLinkedListNode* currentNode = head;
         while (currentNode) {
@@ -171,25 +179,6 @@ public:
 
 int main() {
     MyLinkedList* myLinkedList = new MyLinkedList();
-    myLinkedList->addAtHead(7);
-    myLinkedList->addAtHead(2);
-    myLinkedList->addAtHead(1);
-    myLinkedList->display();
-
-    myLinkedList->addAtIndex(3, 0);
-    myLinkedList->display();
-
-    myLinkedList->deleteAtIndex(2);
-    myLinkedList->display();
-
-    myLinkedList->addAtHead(6);
-    myLinkedList->addAtTail(4);
-    myLinkedList->display();
-
-    std::cout << myLinkedList->get(4) << "\n";
-
-    myLinkedList->addAtHead(4);
-    myLinkedList->addAtIndex(5, 0);
-    myLinkedList->addAtHead(6);
-    myLinkedList->display();
+    myLinkedList->addAtTail(1);
+    std::cout << myLinkedList->get(0) << "\n";
 }
