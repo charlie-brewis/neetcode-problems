@@ -156,29 +156,23 @@ public:
  */
 
 
-// int main() {
-//     MyLinkedList* myLinkedList = new MyLinkedList();
-//     myLinkedList->display();
-    
-//     myLinkedList->addAtHead(1);
-//     myLinkedList->display();
-
-//     myLinkedList->addAtTail(3);
-//     myLinkedList->display();
-
-//     myLinkedList->addAtIndex(1, 2);
-//     myLinkedList->display();
-
-//     std::cout << myLinkedList->get(1) << "\n";
-
-//     myLinkedList->deleteAtIndex(1);
-//     myLinkedList->display();
-
-//     std:: cout << myLinkedList->get(1) << "\n";
-// }
-
 int main() {
     MyLinkedList* myLinkedList = new MyLinkedList();
-    myLinkedList->addAtTail(1);
-    std::cout << myLinkedList->get(0) << "\n";
+    myLinkedList->display();
+    
+    myLinkedList->addAtHead(1);
+    myLinkedList->display();
+
+    myLinkedList->addAtTail(3);
+    myLinkedList->display();
+
+    myLinkedList->addAtIndex(1, 2);
+    myLinkedList->display();
+
+    std::cout << myLinkedList->get(1) << "\n";
+
+    myLinkedList->deleteAtIndex(1);
+    myLinkedList->display();
+
+    std:: cout << myLinkedList->get(1) << "\n";
 }
