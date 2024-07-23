@@ -103,18 +103,13 @@ public:
 
     void addAtIndex(const int index, const int val) {
         if (index < 0 || index > size) return;
-        if (index == 0) {
-            addAtHead(val);
-            return;
-        }
-        if (index == size) {
-            addAtTail(val);
-            return;
-        }
-        ++size;
+        // Note returning function calls as these are void vunctions - null
+        if (index == 0) return addAtHead(val);
+        if (index == size) return addAtTail(val);
         MyLinkedListNode* nodeAtIndex = getNodeAtIndex(index);
         nodeAtIndex->prev = new MyLinkedListNode(val, nodeAtIndex, nodeAtIndex->prev);
         nodeAtIndex->prev->prev->next = nodeAtIndex->prev;
+        ++size;
     }
     
     void deleteAtIndex(const int index) {

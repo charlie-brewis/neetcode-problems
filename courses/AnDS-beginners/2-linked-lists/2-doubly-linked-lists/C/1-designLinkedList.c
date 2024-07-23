@@ -42,37 +42,111 @@ Constraints:
 #include <stdio.h>
 
 
-typedef struct {
-    
+typedef struct Node {
+    int val;
+    struct Node* next;
+    struct Node* prev;
+} Node;
+
+Node* instantiateNode (int val, Node* next, Node* prev) {
+    Node* newNode = (Node*) malloc(sizeof(Node));
+    newNode->val = val;
+    newNode->next = next;
+    newNode->prev = prev;
+    return newNode;
+}
+
+void freeNode(Node* node) { free(node); }
+
+
+
+typedef struct MyLinkedList {
+    Node* head;
+    Node* tail;
+    int size;
 } MyLinkedList;
 
-
 MyLinkedList* myLinkedListCreate() {
-    
+    MyLinkedList* newList = (MyLinkedList*) malloc(sizeof(MyLinkedList));
+    newList->head = NULL;
+    newList->tail = NULL;
+    newList->size = 0;
+    return newList;
 }
 
-int myLinkedListGet(MyLinkedList* obj, int index) {
-    
+Node* myLinkedlistGetNode(const MyLinkedList* obj, const int index) {
+    if (index < 0 || !obj->size) return NULL;
+    int i = 0;
+    Node* currentNode = obj->head;
+    while (i++ != index && currentNode) currentNode = currentNode->next;
+    return currentNode;
 }
 
-void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
-    
+int myLinkedListGet(const MyLinkedList* obj, const int index) {
+    Node* nodeAtIndex = myLinkedlistGetNode(obj, index);
+    return nodeAtIndex ? nodeAtIndex->val : -1;
 }
 
-void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
-    
+void myLinkedListAddAtHead(MyLinkedList* obj, const int val) {
+    Node* newNode = instantiateNode(val, NULL, NULL);
+    if (!obj->size++) {
+        obj->head = newNode;
+        obj->tail = obj->head;
+        return;
+    }
+    newNode->next = obj->head;
+    obj->head->prev = newNode;
+    obj->head = newNode;
 }
 
-void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
-    
+void myLinkedListAddAtTail(MyLinkedList* obj, const int val) {
+    Node* newNode = instantiateNode(val, NULL, NULL);
+    if (!obj->size++) {
+        obj->head = newNode;
+        obj->tail = obj->head;
+        return;
+    }
+    newNode->prev = obj->tail;
+    obj->tail->next = newNode;
+    obj->tail = newNode;
 }
 
-void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
-    
+void myLinkedListAddAtIndex(MyLinkedList* obj, const int index, const int val) {
+    if (index < 0 || index > obj->size) return;
+    if (index == 0) return myLinkedListAddAtHead(obj, val);
+    if (index == obj->size) return myLinkedListAddAtTail(obj, val);
+
+    Node* nodeAtIndex = myLinkedlistGetNode(obj, index);
+    nodeAtIndex->prev = instantiateNode(val, nodeAtIndex, nodeAtIndex->prev);
+    nodeAtIndex->prev->prev->next = nodeAtIndex->prev;
+    ++obj->size;
+}
+
+void myLinkedListDeleteAtIndex(MyLinkedList* obj, const int index) {
+    Node* nodeAtIndex = myLinkedlistGetNode(obj, index);
+    if (!nodeAtIndex) return;
+
+    // If the selected node is not the head, update the next pointer of the previous node
+    if (nodeAtIndex != obj->head) nodeAtIndex->prev->next = nodeAtIndex->next;
+    else obj->head = nodeAtIndex->next;
+
+    // If the selected node is not the tail, update the prev pointer of the next node
+    if (nodeAtIndex != obj->tail) nodeAtIndex->next->prev = nodeAtIndex->prev;
+    else obj->tail = nodeAtIndex->prev;
+
+    free(nodeAtIndex);
+    --obj->size;
 }
 
 void myLinkedListFree(MyLinkedList* obj) {
-    
+    Node* currentNode = obj->head;
+    Node* nextNode;
+    while (currentNode) {
+        nextNode = currentNode->next;
+        free(currentNode);
+        currentNode = nextNode;
+    }
+    free(obj);
 }
 
 /**
