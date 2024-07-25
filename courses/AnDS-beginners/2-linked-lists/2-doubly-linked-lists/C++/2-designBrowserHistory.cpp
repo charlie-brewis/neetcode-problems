@@ -47,11 +47,8 @@ struct Page {
     Page* next;
     Page* prev;
 
-    Page(std::string initUrl, Page* initNext = nullptr, Page* initPrev = nullptr) {
-        url = initUrl;
-        next = initNext;
-        prev = initPrev;
-    }
+    Page(std::string url, Page* next = nullptr, Page* prev = nullptr) 
+    : url(url), next(next), prev(prev) {}
 };
 
 
@@ -76,6 +73,12 @@ public:
         firstPage = new Page(homepage);
         currentPage = firstPage;
     }
+
+    ~BrowserHistory() {
+        currentPage = firstPage;
+        freeAllForwardHistory();
+        delete firstPage;
+    }
     
     void visit(std::string url) {
         freeAllForwardHistory();
@@ -84,25 +87,18 @@ public:
     }
     
     std::string back(int steps) {
-        while (currentPage != firstPage && steps) {
-            currentPage = currentPage->prev;
-            --steps;
-        }
+        while (currentPage != firstPage && steps--) currentPage = currentPage->prev;
         return currentPage->url;
     }
     
     std::string forward(int steps) {
-        while (currentPage->next != nullptr && steps) {
-            currentPage = currentPage->next;
-            --steps;
-        }
+        while (currentPage->next != nullptr && steps--) currentPage = currentPage->next;
         return currentPage->url;
     }
 
 
     void display() {
         Page* page = firstPage;
-        if (!page) std::cout << "null";
         while (page) {
             if (page == currentPage) std::cout << "[curr] ";
             std::cout << page->url << " -> ";
@@ -140,4 +136,6 @@ int main() {
     obj->display();
     obj->visit("youtube.com");
     obj->display();
+    delete obj;
+    return 0;
 }
