@@ -40,24 +40,75 @@ Constraints:
 */
 
 #include <string>
+#include <iostream>
+
+struct Page {
+    std::string url;
+    Page* next;
+    Page* prev;
+
+    Page(std::string initUrl, Page* initNext = nullptr, Page* initPrev = nullptr) {
+        url = initUrl;
+        next = initNext;
+        prev = initPrev;
+    }
+};
 
 
 class BrowserHistory {
+private:
+    Page* firstPage;
+    Page* currentPage;
+
+    void freeAllForwardHistory() {
+        Page* page = currentPage->next;
+        Page* nextPage;
+        while (page) {
+            nextPage = page->next;
+            delete page;
+            page = nextPage;
+        }
+        currentPage->next = nullptr;
+    }
+
 public:
     BrowserHistory(std::string homepage) {
-        
+        firstPage = new Page(homepage);
+        currentPage = firstPage;
     }
     
     void visit(std::string url) {
-        
+        freeAllForwardHistory();
+        currentPage->next = new Page(url, nullptr, currentPage);
+        currentPage = currentPage->next;
     }
     
     std::string back(int steps) {
-        
+        while (currentPage != firstPage && steps) {
+            currentPage = currentPage->prev;
+            --steps;
+        }
+        return currentPage->url;
     }
     
     std::string forward(int steps) {
-        
+        while (currentPage->next != nullptr && steps) {
+            currentPage = currentPage->next;
+            --steps;
+        }
+        return currentPage->url;
+    }
+
+
+    void display() {
+        Page* page = firstPage;
+        if (!page) std::cout << "null";
+        while (page) {
+            if (page == currentPage) std::cout << "[curr] ";
+            std::cout << page->url << " -> ";
+            page = page->next;
+        }
+        std::cout << "\n";
     }
 };
 
@@ -68,3 +119,25 @@ public:
  * string param_2 = obj->back(steps);
  * string param_3 = obj->forward(steps);
  */
+
+
+int main() {
+    BrowserHistory* obj = new BrowserHistory("leetcode.com");
+    obj->display();
+    obj->visit("google.com");
+    obj->display();
+    obj->visit("facebook.com");
+    obj->display();
+    obj->back(3);
+    obj->display();
+    obj->forward(1);
+    obj->display();
+    obj->back(1);
+    obj->display();
+    obj->forward(3);
+    obj->display();
+    obj->back(2);
+    obj->display();
+    obj->visit("youtube.com");
+    obj->display();
+}
