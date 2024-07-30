@@ -43,8 +43,39 @@ Constraints:
 */
 
 
+#include <vector>
+#include <algorithm>
 
+class Solution {
+public:
+    // This algorithm is O(n) time as it requires 1 pass to count the number of 1s, and 1 pass through sandwiches
+    // This makes is O(2n) time complexity which simplifies down to O(n)
+    int countStudents(std::vector<int>& students, std::vector<int>& sandwiches) {
+        int studentsNotEaten = students.size();
 
+        // Note this could be done better with a hashmap
+        int student1s = std::count(students.begin(), students.end(), 1);
+        int student0s = studentsNotEaten - student1s;
+
+        // Since students always wrap to back, and the lengths are the same, the order of students doesn't actually matter
+        for (const int sandwich : sandwiches) {
+            if (sandwich == 0) {
+                // If there is still a student who eats 0s, decrement the number of students that havent eaten
+                // and decrement the number of students who eat 0s.
+                if (student0s-- > 0) --studentsNotEaten;
+
+                // Else, no more students will eat the top sandwich, so no more students will eat
+                else return studentsNotEaten;
+
+            // Same logic but for students who eat 1s
+            } else {
+                if (student1s-- > 0) --studentsNotEaten;
+                else return studentsNotEaten;
+            }
+        }
+        return 0;
+    }
+};
 
 
 
