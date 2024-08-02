@@ -47,6 +47,42 @@ Constraints:
 #include <stdio.h>
 
 
-int countStudents(int* students, int studentsSize, int* sandwiches, int sandwichesSize) {
-    
+int countInArr(const int target, const int* arr, const int arrSize)
+{
+    int count = 0;
+    for (int i = 0; i < arrSize; i++) { if (arr[i] == target) ++count; }
+    return count;
+}
+
+int countStudents(const int* students, const int studentsSize, const int* sandwiches, const int sandwichesSize)
+{
+    int studentsNotEaten = studentsSize;
+
+    // Note this could be done better with a hashmap
+    int student1sCount = countInArr(1, students, studentsSize);
+    int student0sCount = studentsNotEaten - student1sCount;
+
+    for (int i = 0; i < sandwichesSize; i++)
+    {
+        /*
+        If the sandwhich is a 0 AND there is still a student who eats 0's, OR
+        if the sandwhich is a 1 AND there is still a student who eats 1's,
+        decrement the number of students who haven't yet eaten.
+        Else, no more sandwhiches will be eaten, 
+        therefore return the current number of students who haven't eaten.
+        */
+        if (!sandwiches[i] && student0sCount-- ||
+             sandwiches[i] && student1sCount--) --studentsNotEaten;
+        else return studentsNotEaten;
+    }
+    return 0;
+}
+
+
+
+
+int main() {
+    int testStudents[6] = {1,1,1,0,0,1};
+    int testSandwiches[6] = {1,0,0,0,1,1};
+    printf("%d", countStudents(testStudents, 6, testSandwiches, 6));
 }
