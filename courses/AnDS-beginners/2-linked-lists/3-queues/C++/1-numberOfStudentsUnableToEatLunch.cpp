@@ -75,6 +75,23 @@ public:
         }
         return 0;
     }
+
+    
+    int countStudentsClean(std::vector<int>& students, std::vector<int>& sandwiches)
+    {
+        int sandwichesLeft = sandwiches.size();
+
+        int student1sCount = std::count(students.begin(), students.end(), 1);
+        int student0sCount = sandwichesLeft - student1sCount;
+
+        for (const int sandwich : sandwiches)
+        {
+            if (!sandwich && student0sCount-- ||
+                 sandwich && student1sCount--) --sandwichesLeft;
+            else return sandwichesLeft;
+        }
+        return 0;
+    }
 };
 
 
