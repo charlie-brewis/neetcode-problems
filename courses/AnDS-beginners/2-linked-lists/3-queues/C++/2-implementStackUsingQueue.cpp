@@ -42,28 +42,36 @@ Constraints:
 Follow-up: Can you implement the stack using only one queue?
 */
 
+#include <queue>
 
 
 class MyStack {
+private:
+    std::queue<int> _queue;
+    
 public:
-    MyStack() {
-        
-    }
-    
     void push(int x) {
-        
+        _queue.push(x);
     }
     
+    // O(n)
     int pop() {
-        
+        // Copy everything except the last item to the back of the queue, then just pop and return the last item
+        for (int i = 0; i < _queue.size() - 1; i++) {
+            _queue.push(_queue.front());
+            _queue.pop();
+        }
+        int ans = _queue.front();
+        _queue.pop();
+        return ans;
     }
     
     int top() {
-        
+        return _queue.back();
     }
     
     bool empty() {
-        
+        return _queue.empty();
     }
 };
 
