@@ -18,6 +18,7 @@ class Stack {
         int capacity;
         int* data;
 
+        // Double size of stack since they are built of dynamic arrays
         void resize() {
             capacity *= 2;
             int* newArr = new int[capacity];

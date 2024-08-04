@@ -21,6 +21,7 @@ typedef struct {
     int* data;
 } Stack;
 
+// Double size of stack since they are built of dynamic arrays
 static void resize(Stack* stack) {
     stack->capacity *= 2;
     stack->data = (int*) realloc(stack->data, stack->capacity * sizeof(int));
