@@ -77,7 +77,7 @@ int dequeue(Queue* queue) {
 }
 
 
-void display(Queue* queue) {
+void queueDisplay(Queue* queue) {
     Node* currentNode = queue->head;
     while (currentNode) {
         printf("%d -> ", currentNode->val);
