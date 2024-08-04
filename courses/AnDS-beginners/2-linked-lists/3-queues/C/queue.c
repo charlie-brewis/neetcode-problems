@@ -102,3 +102,16 @@ int main() {
 
     return 0;
 }
+
+
+/*
+Conclusion - Queues
+
+Operation |Big-O Time |Notes
+----------+-----------+-----
+Reading   |O(1)       |Only at front
+Insertion |O(1)       |Only at end
+Deletion  |O(1)       |Only at end
+
+Note: in C++ we can import the `Queue` type
+*/
