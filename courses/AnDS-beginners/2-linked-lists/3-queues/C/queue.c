@@ -16,10 +16,10 @@ linked list is in O(1) time, but O(n) time for arrays.
 #include <stdio.h>
 
 
-typedef struct Node {
-    int val;
-    struct Node* next;
-} Node;
+// typedef struct Node {
+//     int val;
+//     struct Node* next;
+// } Node;
 
 Node* nodeCreate(int val, Node* next) {
     Node* newNode = (Node*) malloc(sizeof(Node));
@@ -29,14 +29,16 @@ Node* nodeCreate(int val, Node* next) {
 }
 
 
-typedef struct Queue {
-    Node* front;
-    Node* back;
-} Queue;
+// typedef struct Queue {
+//     Node* front;
+//     Node* back;
+//     int size;
+// } Queue;
 
 Queue* queueCreate() { 
     Queue* newQueue = (Queue*) malloc(sizeof(Queue)); 
     newQueue->front = newQueue->back = NULL;
+    newQueue->size = 0;
     return newQueue;
 }
 
@@ -55,7 +57,7 @@ void queueFree(Queue* obj) {
 void enqueue(Queue* queue, int val) {
     Node* newNode = nodeCreate(val, NULL);
     // If queue is non-empty
-    if (queue->back) {
+    if (queue->size++) {
        queue->back->next = newNode;
        queue->back = queue->back->next; 
     } else {
@@ -66,7 +68,7 @@ void enqueue(Queue* queue, int val) {
 
 int dequeue(Queue* queue) {
     // If queue is empty, return error code
-    if (!queue->front) return -1;
+    if (!queue->size--) return -1;
 
     int val = queue->front->val;
     Node* newHead = queue->front->next;
@@ -76,7 +78,6 @@ int dequeue(Queue* queue) {
     if (!queue->front) queue->back = NULL;
     return val;
 }
-
 
 void queueDisplay(Queue* queue) {
     Node* currentNode = queue->front;
@@ -89,20 +90,19 @@ void queueDisplay(Queue* queue) {
 
 
 
+// int main() {
+//     Queue* myQueue = queueCreate();
+//     enqueue(myQueue, 1);
+//     enqueue(myQueue, 2);
+//     enqueue(myQueue, 3);
+//     queueDisplay(myQueue);
+//     dequeue(myQueue);
+//     queueDisplay(myQueue);
+//     dequeue(myQueue);
+//     queueDisplay(myQueue);
 
-int main() {
-    Queue* myQueue = queueCreate();
-    enqueue(myQueue, 1);
-    enqueue(myQueue, 2);
-    enqueue(myQueue, 3);
-    display(myQueue);
-    dequeue(myQueue);
-    display(myQueue);
-    dequeue(myQueue);
-    display(myQueue);
-
-    return 0;
-}
+//     return 0;
+// }
 
 
 /*

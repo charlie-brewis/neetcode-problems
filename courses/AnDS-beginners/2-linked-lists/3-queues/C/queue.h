@@ -16,12 +16,13 @@ Node* nodeCreate(int val, Node* next);
 typedef struct Queue {
     Node* front;
     Node* back;
+    int size;
 } Queue;
 
 Queue* queueCreate();
 void queueFree(Queue* obj);
 void enqueue(Queue* queue, int val);
-void dequeue(Queue* queue);
+int dequeue(Queue* queue);
 void queueDisplay(Queue* queue);
 
 
