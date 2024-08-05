@@ -26,3 +26,8 @@ int factorial(int n) {
 int main() {
     printf("\n%d", factorial(5));
 }
+
+
+
+// Note: a lot of recursive functions can also be done using loops, however recursion can sometimes be simplier or even the only possible way
+// Take readability and efficiency into consideration when deciding to use an iterative or recursive approach to a problem
