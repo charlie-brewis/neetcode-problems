@@ -36,6 +36,11 @@ typedef struct ListNode {
     struct ListNode *next;
 } ListNode;
 
+
+/*
+Time Complexity:  O(n)
+Space Complexity: O(1)
+*/
 ListNode* reverseListIterative(ListNode* head) {
     ListNode* currentNode = head;
     ListNode* prevNode = NULL;
@@ -47,4 +52,21 @@ ListNode* reverseListIterative(ListNode* head) {
         currentNode = nextNode;
     }
     return prevNode;
+}
+
+
+/*
+Time Complexity:  O(n)
+Space Complexity: O(n)
+*/
+ListNode* reverseListRecursive(ListNode *head) {
+    // We have reached the last node, our result, therefore return it
+    if (head == NULL || head->next == NULL) return head;
+    ListNode* result = reverseListRecursive(head->next);
+    // Point the next node to head (current node)
+    head->next->next = head;
+    // Remove the head's next pointer
+    head->next = NULL;
+    // Keep returning the same result (old last node)
+    return result;
 }
