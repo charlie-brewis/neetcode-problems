@@ -36,6 +36,15 @@ typedef struct ListNode {
     struct ListNode *next;
 } ListNode;
 
-ListNode* reverseList(ListNode* head) {
-    
+ListNode* reverseListIterative(ListNode* head) {
+    ListNode* currentNode = head;
+    ListNode* prevNode = NULL;
+    ListNode* nextNode;
+    while (currentNode) {
+        nextNode = currentNode->next;
+        currentNode->next = prevNode;
+        prevNode = currentNode;
+        currentNode = nextNode;
+    }
+    return prevNode;
 }
