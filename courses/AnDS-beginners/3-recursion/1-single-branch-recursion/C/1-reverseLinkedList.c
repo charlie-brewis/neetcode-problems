@@ -27,9 +27,6 @@ Follow up: A linked list can be reversed either iteratively or recursively. Coul
 */
 
 
-#include <stdlib.h>
-
-
 
 typedef struct ListNode {
     int val;
