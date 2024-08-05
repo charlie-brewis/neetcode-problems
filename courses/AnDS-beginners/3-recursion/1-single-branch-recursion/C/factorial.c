@@ -10,6 +10,8 @@ Single branch recursion is when each recursive case of the function only has one
 An example of this is the factorial equation:
     `n! = n * (n-1) * (n-2) * ... * 1`
 In this equation, 1 is the base case and factorial(n - 1) is the recursive case.
+i.e., n! = n * (n-1)!
+
 
 This is single branch recursion because each call of factorial() only ever calls factorial() again once.
 */
@@ -18,7 +20,7 @@ This is single branch recursion because each call of factorial() only ever calls
 
 int factorial(int n) {
     // Base case where n == 1
-    if (n == 1) return n;
+    if (n <= 1) return n;
     // Recursive case any other time
     return n * factorial(n - 1);
 }
@@ -29,5 +31,17 @@ int main() {
 
 
 
-// Note: a lot of recursive functions can also be done using loops, however recursion can sometimes be simplier or even the only possible way
-// Take readability and efficiency into consideration when deciding to use an iterative or recursive approach to a problem
+/*
+Note: a lot of recursive functions can also be done using loops, however recursion can sometimes be simplier or even the only possible way
+Take readability and efficiency into consideration when deciding to use an iterative or recursive approach to a problem
+
+E.g., the iterative solution:
+    int factorial(int n) {
+        int result = 1;
+        while (n > 1) { result *= n--; }
+    }
+
+In this case, both solutions have time complexity O(n), however the iterative solution has space
+complexity of O(1) while the recursive has space complexity of O(n) due to the number of function calls.
+Therefore, the iterative solution is the more efficient solution in this case.
+*/
