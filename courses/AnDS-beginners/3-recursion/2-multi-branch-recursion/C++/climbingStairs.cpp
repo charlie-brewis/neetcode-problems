@@ -23,6 +23,9 @@ Constraints:
     1 <= n <= 45
 */
 
+// Note this is the wrong answer for leetcode as it has a time complexity of O(2^n),
+// however i am leaving this answer as this is a section on recursion not iteration.
 int climbStairs(int n) {
-    
+    if (n <= 2) return n;
+    return climbStairs(n - 1) + climbStairs(n - 2);
 }
