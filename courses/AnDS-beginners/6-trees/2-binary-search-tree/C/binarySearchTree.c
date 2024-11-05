@@ -1,7 +1,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 
 
 typedef struct TreeNode {
@@ -62,9 +61,9 @@ Complexity:
     
     Note all cases are the same for space.
 */
-bool searchBST(TreeNode* root, int target) {
-    if (!root) return false;
-    if (target == root->val) return true;
+TreeNode* searchBST(TreeNode* root, int target) {
+    if (!root)               return NULL;
+    if (target == root->val) return root;
 
     if (target < root->val) return searchBST(root->left, target);
     else                    return searchBST(root->right, target);
