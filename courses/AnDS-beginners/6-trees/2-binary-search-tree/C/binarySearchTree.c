@@ -47,6 +47,17 @@ void freeTree(TreeNode* root) {
 }
 
 
+int findMin(TreeNode* root) {
+    while (root->left) { root = root->left; }
+    return root->val;
+}
+
+int findMax(TreeNode* root) {
+    while (root->right) { root = root->right; }
+    return root->val;
+}
+
+
 /* == SEARCHING == */
 
 /*
@@ -93,4 +104,10 @@ TreeNode* BSTInsert(TreeNode* root, int val) {
     else                  root->right = BSTInsert(root->right, val);
 
     return root;
+}
+
+
+/* == DELETION == */
+
+void BSTDelete(TreeNode* root, int val) {
 }
