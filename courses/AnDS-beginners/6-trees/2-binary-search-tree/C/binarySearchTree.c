@@ -46,6 +46,7 @@ void freeTree(TreeNode* root) {
     freeTree(root->right);
 }
 
+
 /* == SEARCHING == */
 
 /*
@@ -67,4 +68,29 @@ TreeNode* searchBST(TreeNode* root, int target) {
 
     if (target < root->val) return searchBST(root->left, target);
     else                    return searchBST(root->right, target);
+}
+
+
+/* == INSERTING == */
+
+/*
+Complexity:
+    Time:
+        Best:    O(1)     - on root == target
+        Average: O(log n) - on well balanced tree
+        Worst:   O(n)     - on very unbalanced tree
+
+        Technically, people sometimes say the time 
+        complexity is O(h) where h is the height of
+        the tree.
+    
+    Note all cases are the same for space.
+*/
+TreeNode* BSTInsert(TreeNode* root, int val) {
+    if (!root) return initNode(val);
+
+    if (val <= root->val) root->left  = BSTInsert(root->left, val);
+    else                  root->right = BSTInsert(root->right, val);
+
+    return root;
 }
