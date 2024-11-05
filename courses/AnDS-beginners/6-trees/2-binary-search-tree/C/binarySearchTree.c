@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#define COUNT 10
 
 
 typedef struct TreeNode {
@@ -57,15 +58,6 @@ TreeNode* findMax(TreeNode* root) {
     TreeNode* currentNode = root;
     while (currentNode && currentNode->right) { currentNode = currentNode->right; }
     return currentNode;
-}
-
-void display1D(TreeNode* root) {
-    if (root == NULL) return;
-    // Print left subtree
-    display1D(root->left);
-    printf("%d ", root->val);
-    // Print right subtree
-    display1D(root->right);
 }
 
 
@@ -171,3 +163,61 @@ TreeNode* BSTDelete(TreeNode* root, int val) {
 }
 // Note ive decided to find the maximum from the left subtree but this can also be done with the 
 // minimum from the right subtree.
+
+
+
+// Function to print binary tree in 2D
+void print2DUtil(TreeNode* root, int space) {
+    // Base case
+    if (root == NULL) return;
+ 
+    // Increase distance between levels
+    space += COUNT;
+ 
+    // Process right child first
+    print2DUtil(root->right, space);
+ 
+    // Print current node after space
+    printf("\n");
+    for (int i = COUNT; i < space; i++)
+        printf(" ");
+    printf("%d\n", root->val);
+ 
+    // Process left child
+    print2DUtil(root->left, space);
+}
+ 
+// Wrapper over print2DUtil()
+void print2D(TreeNode* root) {
+    // Pass initial space count as 0
+    print2DUtil(root, 0);
+}
+
+
+
+
+int main() {
+    BinarySearchTree* myTree = initTree();
+    
+    myTree->root = BSTInsert(myTree->root, 4);
+    BSTInsert(myTree->root, 3);
+    BSTInsert(myTree->root, 2);
+    BSTInsert(myTree->root, 6);
+    BSTInsert(myTree->root, 7);
+    BSTInsert(myTree->root, 5);
+
+    print2D(myTree->root);
+    printf("\n");
+
+    BSTDelete(myTree->root, 4);
+
+    print2D(myTree->root);
+    printf("\n");
+
+    BSTDelete(myTree->root, 5);
+
+    print2D(myTree->root);
+    printf("\n");
+
+    return 0;
+}
