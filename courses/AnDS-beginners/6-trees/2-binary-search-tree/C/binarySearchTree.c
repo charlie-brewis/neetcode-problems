@@ -48,13 +48,15 @@ void freeTree(TreeNode* root) {
 
 
 int findMin(TreeNode* root) {
-    while (root->left) { root = root->left; }
-    return root->val;
+    TreeNode* currentNode = root;
+    while (currentNode && currentNode->left) { currentNode = currentNode->left; }
+    return currentNode->val;
 }
 
 int findMax(TreeNode* root) {
-    while (root->right) { root = root->right; }
-    return root->val;
+    TreeNode* currentNode = root;
+    while (currentNode && currentNode->right) { currentNode = currentNode->right; }
+    return currentNode->val;
 }
 
 
