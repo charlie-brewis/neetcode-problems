@@ -59,6 +59,15 @@ TreeNode* findMax(TreeNode* root) {
     return currentNode;
 }
 
+void display1D(TreeNode* root) {
+    if (root == NULL) return;
+    // Print left subtree
+    display1D(root->left);
+    printf("%d ", root->val);
+    // Print right subtree
+    display1D(root->right);
+}
+
 
 /* == SEARCHING == */
 
