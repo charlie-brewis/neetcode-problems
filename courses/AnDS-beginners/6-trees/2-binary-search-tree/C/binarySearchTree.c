@@ -221,3 +221,17 @@ int main() {
 
     return 0;
 }
+
+
+
+
+/*
+Conclusion - Binary Search Trees
+
+Operation |Big-O Time             |Notes
+----------+-----------------------+-----
+Searching |O(1) < O(log n) < O(n) |Can also be described as O(h) where h is the height of the tree
+Insertion |O(1) < O(log n) < O(n) |Only at end
+Deletion  |O(log n)               |Only at end
+
+*/
