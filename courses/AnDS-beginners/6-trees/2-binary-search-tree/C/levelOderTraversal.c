@@ -28,6 +28,15 @@ struct TreeNode* treeInsert(struct TreeNode* root, const int val) {
     return root;
 }
 
+void treeFree(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    treeFree(root->left);
+    treeFree(root->right);
+
+    free(root);
+}
+
 typedef struct QueueNode {
     struct TreeNode* node;
     struct QueueNode* next;
