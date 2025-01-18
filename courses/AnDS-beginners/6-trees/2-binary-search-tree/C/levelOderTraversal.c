@@ -57,7 +57,6 @@ Queue* initQueue() {
 
 void enqueue(Queue* queue, struct TreeNode* node) {
     if (node == NULL) return; // Skip NULL values
-    
     // If the queue is empty, set front and back
     if (queue->length++ == 0) {
         queue->front = queue->back = initQueueNode(node);
@@ -114,10 +113,9 @@ int** levelOrder(struct TreeNode* root, int* returnSize, int** returnColumnSizes
             if (currentNode->right != NULL) enqueue(queue, currentNode->right);
         }
         ++(*returnSize);
-
-        free(queue);
-        return levels;
     }
+    free(queue);
+    return levels;
 }
 
 
