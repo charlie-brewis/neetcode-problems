@@ -151,6 +151,7 @@ int main() {
     }
     free(result);
     free(returnColumnSizes);
+    treeFree(root);
 
     return 0;
 }
