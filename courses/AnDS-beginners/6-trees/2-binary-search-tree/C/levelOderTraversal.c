@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #define MAX_NODES 2000
-#define MAX_LEVELS MAX_NODES / 2
+#define MAX_LEVELS MAX_NODES // Worst case scenario degrades to a linked list
 
 struct TreeNode {
     int val;
