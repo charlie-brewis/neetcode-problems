@@ -39,7 +39,11 @@ Constraints:
 #define MAX_LENGTH 100
 
 int binarySearch(int* arr, int start, int end, int target) {
-    if (start >= end) return start;
+    if (start == end) {
+        // Handle case where binary search overshoots row
+        if (arr[start] > target) return start - 1;
+        else return start;
+    }
 
     int mid_i = (start + end) / 2;
     int mid_val = arr[mid_i];
@@ -49,6 +53,7 @@ int binarySearch(int* arr, int start, int end, int target) {
     else return mid_i;
 }
 
+// Time complexity: O(n + log(n * m)) => O(n) ?
 bool searchMatrix(int** matrix, int matrixSize, int* matrixColSize, int target) {
     /*
         Plan:
@@ -65,27 +70,19 @@ bool searchMatrix(int** matrix, int matrixSize, int* matrixColSize, int target) 
 
     // 2. Perform binary search on this array
     int row_i = binarySearch(firstCol, 0, matrixSize - 1, target);
-    printf("row_i = %d\n", row_i);
 
     // 4. Perform binary search on this row
-    int target_i = binarySearch(matrix[row_i], 0, *matrixColSize, target);
+    int target_i = binarySearch(matrix[row_i], 0, *matrixColSize - 1, target);
+
+    // Free allocated memory
+    free(firstCol);
 
     return (matrix[row_i][target_i] == target);
 }
 
 
-
 int main() {
-    /*
-    Example 1:
-    Input: matrix = [
-        [1,3,5,7],
-        [10,11,16,20],
-        [23,30,34,60]
-        ], target = 3
-    Output: true
-    */
-   
+    //[[1,3,5,7],[10,11,16,20],[23,30,34,50]]
     int m = 3; // Num rows
     int n = 4; // Num cols
 
@@ -98,7 +95,7 @@ int main() {
     int values[3][4] = {
         {1, 3, 5, 7},
         {10, 11, 16, 20},
-        {23, 30, 34, 60}
+        {23, 30, 34, 50}
     };
 
     // Populate Matrix
@@ -110,7 +107,7 @@ int main() {
 
     int matrixColSize = n;
 
-    printf("%d", searchMatrix(matrix, 3, &matrixColSize, 3));
+    printf("%d", searchMatrix(matrix, m, &matrixColSize, 11));
 
     // Free allocated memory
     for (int i = 0; i < m; i++) {
@@ -120,3 +117,52 @@ int main() {
 
     return 0;
 }
+
+
+// int main() {
+//     /*
+//     Example 1:
+//     Input: matrix = [
+//         [1,3,5,7],
+//         [10,11,16,20],
+//         [23,30,34,60]
+//         ], target = 3
+//     Output: true
+//     */
+
+//     int m = 3; // Num rows
+//     int n = 4; // Num cols
+
+//     // Allocate memory for matrix
+//     int** matrix = (int**) malloc(sizeof(int*) * m);
+//     for (int i = 0; i < n; i++) {
+//         matrix[i] = (int*) malloc(sizeof(int) * n);
+//     }
+
+//     int values[3][4] = {
+//         {1, 3, 5, 7},
+//         {10, 11, 16, 20},
+//         {23, 30, 34, 60}
+//     };
+
+//     // Populate Matrix
+//     for (int i = 0; i < m; i++) {
+//         for (int j = 0; j < n; j++) {
+//             matrix[i][j] = values[i][j];
+//         }
+//     }
+
+//     int matrixColSize = n;
+
+//     printf("%d", searchMatrix(matrix, 3, &matrixColSize, 3));
+
+//     // Free allocated memory
+//     for (int i = 0; i < m; i++) {
+//         free(matrix[i]);
+//     }
+//     free(matrix);
+
+//     return 0;
+// }
+
+
