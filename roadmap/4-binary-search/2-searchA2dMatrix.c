@@ -80,9 +80,17 @@ bool searchMatrix(int** matrix, int matrixSize, int* matrixColSize, int target) 
     return (matrix[row_i][target_i] == target);
 }
 
-
 int main() {
-    //[[1,3,5,7],[10,11,16,20],[23,30,34,50]]
+    /*
+    Example 1:
+    Input: matrix = [
+        [1,3,5,7],
+        [10,11,16,20],
+        [23,30,34,60]
+        ], target = 3
+    Output: true
+    */
+
     int m = 3; // Num rows
     int n = 4; // Num cols
 
@@ -95,7 +103,7 @@ int main() {
     int values[3][4] = {
         {1, 3, 5, 7},
         {10, 11, 16, 20},
-        {23, 30, 34, 50}
+        {23, 30, 34, 60}
     };
 
     // Populate Matrix
@@ -107,7 +115,7 @@ int main() {
 
     int matrixColSize = n;
 
-    printf("%d", searchMatrix(matrix, m, &matrixColSize, 11));
+    printf("%d", searchMatrix(matrix, 3, &matrixColSize, 3));
 
     // Free allocated memory
     for (int i = 0; i < m; i++) {
@@ -117,52 +125,5 @@ int main() {
 
     return 0;
 }
-
-
-// int main() {
-//     /*
-//     Example 1:
-//     Input: matrix = [
-//         [1,3,5,7],
-//         [10,11,16,20],
-//         [23,30,34,60]
-//         ], target = 3
-//     Output: true
-//     */
-
-//     int m = 3; // Num rows
-//     int n = 4; // Num cols
-
-//     // Allocate memory for matrix
-//     int** matrix = (int**) malloc(sizeof(int*) * m);
-//     for (int i = 0; i < n; i++) {
-//         matrix[i] = (int*) malloc(sizeof(int) * n);
-//     }
-
-//     int values[3][4] = {
-//         {1, 3, 5, 7},
-//         {10, 11, 16, 20},
-//         {23, 30, 34, 60}
-//     };
-
-//     // Populate Matrix
-//     for (int i = 0; i < m; i++) {
-//         for (int j = 0; j < n; j++) {
-//             matrix[i][j] = values[i][j];
-//         }
-//     }
-
-//     int matrixColSize = n;
-
-//     printf("%d", searchMatrix(matrix, 3, &matrixColSize, 3));
-
-//     // Free allocated memory
-//     for (int i = 0; i < m; i++) {
-//         free(matrix[i]);
-//     }
-//     free(matrix);
-
-//     return 0;
-// }
 
 
