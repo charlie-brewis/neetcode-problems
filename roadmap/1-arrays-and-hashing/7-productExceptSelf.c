@@ -60,6 +60,31 @@ int* productExceptSelf(int* nums, int numsSize, int* returnSize) {
     return returnArr;
 }
 
+// O(n)
+// Calculate every suffix and prefix in 2 passes to avoid reduntant calculations
+int* productExceptSelf2(int* nums, int numsSize, int* returnSize) {
+    // Define return values
+    *returnSize = numsSize;
+    int* returnArr = (int*) malloc(sizeof(int) * *returnSize);
+
+    // Left -> right pass
+    int multiplier = 1;
+    for (int i = 0; i < numsSize; i++) {
+        // Set value to product of suffix
+        returnArr[i] = multiplier;
+        multiplier *= nums[i];
+    }
+
+    // Right -> left pass
+    multiplier = 1;
+    for (int i = numsSize - 1; i >= 0; i--) {
+        // Multiply value by product of prefix
+        returnArr[i] *= multiplier;
+        multiplier *= nums[i];
+    }
+
+    return returnArr;
+}
 
 int main () {
 
